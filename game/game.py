@@ -1,3 +1,4 @@
+import os
 import pygame
 import sys
 from .config import *
@@ -16,6 +17,9 @@ class Game:
 
         pygame.display.set_caption(TITLE)
         self.font = pygame.font.match_font(FONT)
+
+        self.dir = os.path.dirname(__file__)
+        self.dir_sounds = os.path.join(self.dir,'sources/sounds')
 
         self.running = True
         self.playing = True
@@ -52,23 +56,26 @@ class Game:
         self.surface.fill(LIGHTPURPLE)
         self.sprites.draw(self.surface)
         self.draw_text()
+        pygame.display.flip() #es igual que update pero lo hace solo sobre la surface
 
     def update(self):
         if self.playing:
-
-            pygame.display.flip() #es igual que update pero lo hace solo sobre la surface
 
             wall = self.player.collide_with(self.walls)
             if wall:
                 if self.player.collide_bottom(wall):
                     self.player.skid(wall)
                 else:
+                    sound_crash_wall = pygame.mixer.Sound(os.path.join(self.dir_sounds,'crash_in_wall.wav'))
+                    sound_crash_wall.play()
                     self.stop()
 
             coin = self.player.collide_with(self.coins)
             if coin:
                 self.score += 1
                 coin.kill()
+                sound_coin = pygame.mixer.Sound(os.path.join(self.dir_sounds,'pick_coin.wav'))
+                sound_coin.play()
 
             self.sprites.update()
 
@@ -108,6 +115,8 @@ class Game:
                 self.sprites.add(wall)
                 self.walls.add(wall)
             self.level += 1
+            sound_new_level = pygame.mixer.Sound(os.path.join(self.dir_sounds,'new_level.wav'))
+            sound_new_level.play()
             self.generate_coins()
 
     def generate_coins(self):
@@ -142,6 +151,8 @@ class Game:
     def draw_text(self):
         self.display_text(str(self.score_format()),36,WHITE,WIDTH//2,30)
         self.display_text(str(self.level_format()),36,WHITE,60,30)
+        if not self.playing:
+            self.display_text('Game Over',60,WHITE,WIDTH//2,HEIGHT//2)
 
     def display_text(self,text,size,color,pos_x,pos_y):
         font = pygame.font.Font(self.font, size)
