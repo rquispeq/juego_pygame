@@ -19,6 +19,7 @@ class Game:
 
         self.running = True
         self.playing = True
+        self.level = 0
 
     def start(self):
         self.new()
@@ -93,7 +94,6 @@ class Game:
         self.sprites.add(self.platform)
         self.sprites.add(self.player)
         self.generate_walls()
-        self.generate_coins()
 
 
     def generate_walls(self):
@@ -107,6 +107,8 @@ class Game:
                 last_position = wall.rect.right
                 self.sprites.add(wall)
                 self.walls.add(wall)
+            self.level += 1
+            self.generate_coins()
 
     def generate_coins(self):
         last_position = WIDTH + 100
@@ -134,8 +136,12 @@ class Game:
     def score_format(self):
         return 'Score:{} '.format(self.score)
 
+    def level_format(self):
+        return 'Level: {}'.format(self.level)
+
     def draw_text(self):
         self.display_text(str(self.score_format()),36,WHITE,WIDTH//2,30)
+        self.display_text(str(self.level_format()),36,WHITE,60,30)
 
     def display_text(self,text,size,color,pos_x,pos_y):
         font = pygame.font.Font(self.font, size)
