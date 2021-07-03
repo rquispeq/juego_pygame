@@ -22,14 +22,14 @@ class Game:
         self.dir_sounds = os.path.join(self.dir,'sources/sounds')
 
         self.running = True
-        self.playing = True
-        self.level = 0
 
     def start(self):
         self.new()
 
     def new(self):
         self.score = 0
+        self.level = 0
+        self.playing = True
         self.generate_elements()
         self.run()
 
@@ -51,6 +51,9 @@ class Game:
 
         if key[pygame.K_SPACE]:
             self.player.jump()
+
+        if key[pygame.K_r] and not self.playing:
+            self.new()
     
     def draw(self):
         self.surface.fill(LIGHTPURPLE)
@@ -153,6 +156,7 @@ class Game:
         self.display_text(str(self.level_format()),36,WHITE,60,30)
         if not self.playing:
             self.display_text('Game Over',60,WHITE,WIDTH//2,HEIGHT//2)
+            self.display_text('Presiona R para comenzar de nuevo',20,WHITE,WIDTH//2,HEIGHT//2 + 80)
 
     def display_text(self,text,size,color,pos_x,pos_y):
         font = pygame.font.Font(self.font, size)
