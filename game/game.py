@@ -16,6 +16,7 @@ class Game:
         pygame.display.set_caption(TITLE)
 
         self.running = True
+        self.playing = True
 
     def start(self):
         self.new()
@@ -48,13 +49,18 @@ class Game:
         self.sprites.draw(self.surface)
 
     def update(self):
-        pygame.display.flip() #es igual que update pero lo hace solo sobre la surface
-        self.sprites.update()
-        self.player.validate_platform(self.platform)
+        if self.playing:
 
-        wall = self.player.collide_with(self.walls)
-        if wall:
-            self.stop()
+            pygame.display.flip() #es igual que update pero lo hace solo sobre la surface
+
+            wall = self.player.collide_with(self.walls)
+            if wall:
+                self.stop()
+
+            self.sprites.update()
+            
+            self.player.validate_platform(self.platform)
+
 
     def generate_elements(self):
         self.platform = Platform()
@@ -82,6 +88,7 @@ class Game:
     def stop(self):
         self.player.stop()
         self.stop_elements(self.walls)
+        self.playing = False
         pass
 
     def stop_elements(self,elements):
