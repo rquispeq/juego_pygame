@@ -14,8 +14,11 @@ class Wall(pygame.sprite.Sprite):
         self.rect.bottom = bottom
         self.speedX = SPEED
 
+        self.rect_top = pygame.Rect(self.rect.x,self.rect.y,self.rect.width,1)
+
     def update(self):
         self.rect.left -= self.speedX
+        self.rect_top.left = self.rect.left
 
     def stop(self):
         self.speedX = 0
