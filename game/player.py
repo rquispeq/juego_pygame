@@ -1,8 +1,9 @@
 import pygame 
+import os
 from .config import *
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self,left,bottom):
+    def __init__(self,left,bottom,dir_images):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = pygame.Surface((40,40))

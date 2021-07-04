@@ -1,13 +1,14 @@
 import pygame
+import os
 from .config import *
 
 class Wall(pygame.sprite.Sprite):
 
-    def __init__(self,left,bottom):
+    def __init__(self,left,bottom,dir_images):
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = pygame.Surface((40,80))
-        self.image.fill(RED)
+        self.image = pygame.image.load(os.path.join(dir_images,'wall.png'))
+        self.image = pygame.transform.scale(self.image,(40,80))
 
         self.rect = self.image.get_rect()
         self.rect.left = left

@@ -20,6 +20,9 @@ class Game:
 
         self.dir = os.path.dirname(__file__)
         self.dir_sounds = os.path.join(self.dir,'sources/sounds')
+        self.dir_images = os.path.join(self.dir,'sources/sprites')
+        self.background = pygame.image.load(os.path.join(self.dir_images,'background.jpg'))
+        self.background = pygame.transform.scale(self.background,(WIDTH,HEIGHT))
 
         self.running = True
 
@@ -57,7 +60,8 @@ class Game:
             self.new()
     
     def draw(self):
-        self.surface.fill(LIGHTPURPLE)
+        # self.surface.fill(LIGHTPURPLE)
+        self.surface.blit(self.background,(0,0))
         self.sprites.draw(self.surface)
         self.draw_text()
         pygame.display.flip() #es igual que update pero lo hace solo sobre la surface
@@ -96,7 +100,7 @@ class Game:
     
     def generate_elements(self):
         self.platform = Platform()
-        self.player = Player(100,self.platform.rect.top-200)
+        self.player = Player(100,self.platform.rect.top-200,self.dir_images)
         self.walls = pygame.sprite.Group()
         self.coins = pygame.sprite.Group()
 
@@ -114,7 +118,7 @@ class Game:
         if not len(self.walls) > 0:
             for w in range(0,MAX_WALLS):
                 left = random.randrange(last_position + 200, last_position + 400)
-                wall = Wall(left,self.platform.rect.top)
+                wall = Wall(left,self.platform.rect.top,self.dir_images)
                 last_position = wall.rect.right
                 self.sprites.add(wall)
                 self.walls.add(wall)
@@ -129,7 +133,7 @@ class Game:
         for c in range(0,MAX_COINS):
             pos_x = random.randrange(last_position + 180, last_position + 300)
 
-            coin = Coin(pos_x,150)
+            coin = Coin(pos_x,150,self.dir_images)
 
             last_position = coin.rect.right
 
