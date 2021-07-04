@@ -1,6 +1,6 @@
 # Videojuego hecho en Python
 
-Videojuego de plataformas realizado en Python con la libreria Pygame.
+Videojuego de plataformas realizado en Python con la librería Pygame.
 
 ## Herramientas Utilizadas
 * Python 3
@@ -10,8 +10,8 @@ Videojuego de plataformas realizado en Python con la libreria Pygame.
 1. Pantalla de inicio
 1. Salto de personaje
 1. Movimiento de obstáculos
-1. Contador de Niveles
-1. Contador de Puntos al tomar monedas.
+1. Contador de niveles
+1. Contador de puntos al tomar monedas.
 1. Movimiento de monedas.
 1. Reproducción de sonidos al chocar con un obstáculo, tomar una moneda y saltar.
 1. Reinicio del juego al perder
