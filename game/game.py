@@ -24,6 +24,7 @@ class Game:
         self.running = True
 
     def start(self):
+        self.menu()
         self.new()
 
     def new(self):
@@ -164,3 +165,25 @@ class Game:
         rect = text.get_rect()
         rect.midtop = (pos_x,pos_y)
         self.surface.blit(text,rect)
+
+    def menu(self):
+        self.surface.fill(GREEN_LIGHT)
+        self.display_text('Presiona una tecla para comenzar',36,BLACK,WIDTH//2,10)
+        pygame.display.flip()
+        self.wait()
+
+    def wait(self):
+        wait = True
+        while wait:
+            self.clock.tick(FPS)
+
+            for event in pygame.event.get():
+
+                if event.type == pygame.QUIT:
+                    wait = False
+                    self.runing = False
+                    pygame.quit()
+                    sys.exit()
+
+                if event.type == pygame.KEYUP:
+                    wait = False
